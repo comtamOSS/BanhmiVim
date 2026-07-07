@@ -1,0 +1,74 @@
+
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.mouse = "n"
+vim.opt.cursorline = true
+vim.opt.termguicolors = true
+vim.opt.wrap = false
+vim.opt.scrolloff = 5
+vim.opt.clipboard = "unnamedplus"
+vim.wo.signcolumn = "yes"
+vim.opt.winborder = "rounded"
+
+local sev = vim.diagnostic.severity
+
+vim.diagnostic.config({
+  severity_sort = true,
+  signs = {
+    text = {
+      [sev.ERROR] = '',
+      [sev.WARN]  = ' ',
+      [sev.INFO]  = ' ',
+      [sev.HINT]  = '󰌵',
+    },
+  },
+})
+
+-- -------------------------------------
+--            UTILS
+-- -------------------------------------
+--
+-- highlight codeblock in markdown
+vim.g.markdown_fenced_languages = {
+   "html",
+   "python",
+   "lua",
+   "vim",
+   "typescript",
+   "javascript",
+   "php",
+   "yaml",
+   "toml",
+   "rust",
+   "java",
+}
+
+-- -------------------------------------
+--             FILETYPE
+-- -------------------------------------
+vim.filetype.add({
+   pattern = {
+      [".*%.blade%.php"] = "blade",
+      [".*%.norg"] = "norg",
+      [".*%.http"] = "http",
+   },
+   extension = {
+      razor = "razor",
+      cshtml = "razor",
+   }
+})
+--
+-- -------------------------------------
+--             TABLE-MODE
+-- -------------------------------------
+vim.g.table_mode_disable_mappings = 1
+vim.g.table_mode_disable_tableize_mappings = 1
+
+-- vim.g.codeium_enabled = false
+
+-- Disable zig auto format
+vim.g.zig_fmt_autosave = 0
+require('vim._core.ui2').enable()

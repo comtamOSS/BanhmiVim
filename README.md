@@ -9,6 +9,7 @@ Instant Neovim IDE just work (for me)
 alias banhmivim="<PATH>/BanhmiVim/banhmivim/banhmivim"
 ```
 
+### Windows
 ```ps1
 function banhmivim {
     & "D:\<PATH>\BanhmiVim\banhmivim\banhmivim.ps1" @args

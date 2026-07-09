@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TARGET_DIR="$(pwd)/dist"
+TARGET_DIR="$(pwd)/dist/banhmivim"
 BUNDLE_CONFIG="$TARGET_DIR/config"
 BIN_DIR="$TARGET_DIR/bin"
 
@@ -26,6 +26,7 @@ LUA_LSP_URL="https://github.com/LuaLS/lua-language-server/releases/download/${LU
 echo "Downloading Lua Language Server..."
 mkdir -p "$BIN_DIR/lua-language-server"
 curl -L "$LUA_LSP_URL" | tar -xz -C "$BIN_DIR/lua-language-server"
+
 # Create a symlink or a wrapper in bin so it's globally executable inside the bundle
 # ln -s "$BIN_DIR/lua-language-server/bin/lua-language-server" "$BIN_DIR/lua-language-server-binary"
 

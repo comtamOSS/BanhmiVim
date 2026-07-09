@@ -1,4 +1,4 @@
 vim.lsp.enable("lua_ls")
 
--- vim.lsp.completion.enable()
+-- vim.lsp.completion.disable()
 

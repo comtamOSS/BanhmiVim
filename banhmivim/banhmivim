@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+BMVIM_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+BMVIM_DATA_PATH="$HOME/.banhmivim/data"
+BMVIM_STATE_PATH="$HOME/.banhmivim/state"
+BMVIM_CACHE_PATH="$HOME/.banhmivim/cache"
+
+export NVIM_APPNAME="banhmivim"
+
+export XDG_CONFIG_HOME="$BMVIM_SCRIPT_DIR/config"
+export XDG_DATA_HOME="$BMVIM_DATA_PATH"
+export XDG_STATE_HOME="$BMVIM_STATE_PATH"
+export XDG_CACHE_HOME="$BMVIM_CACHE_PATH"
+
+exec nvim "$@"

@@ -3,7 +3,10 @@ vim.pack.add({
 })
 
 
-local colors, _ = require("monoglow.colors").setup({})
+-- local colors, _ = require("monoglow.colors").setup({})
+local colors = require("everforest.colours").generate_palette({
+      colours_override = function(_) end,
+   }, "dark")
 
 
 local mode_color = {
@@ -82,10 +85,10 @@ require("lualine").setup({
          --       },
          {
             "mode",
-            -- color = function()
-            --    return { fg = mode_color[vim.fn.mode()], bg = "" }
-            -- end,
-            padding = { left = 0 },    -- We don't need space before this
+            color = function()
+               return { fg = colors.bg0, bg = mode_color[vim.fn.mode()] }
+            end,
+            padding = { left = 1 },    -- We don't need space before this
 
          },
       },
@@ -94,9 +97,9 @@ require("lualine").setup({
             function()
                return icons[vim.fn.mode()]
             end,
-            -- color = function()
-            --    return { fg = mode_color[vim.fn.mode()], bg = "" }
-            -- end,
+            color = function()
+               return { fg = colors.bg0, bg = mode_color[vim.fn.mode()] }
+            end,
          },
          {
             "branch",

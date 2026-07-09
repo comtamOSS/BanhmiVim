@@ -2,6 +2,19 @@
 
 Instant Neovim IDE just work (for me)
 
+## Setup alias
+
+### Linux
+```zsh
+alias banhmivim="<PATH>/BanhmiVim/banhmivim/banhmivim"
+```
+
+```ps1
+function banhmivim {
+    & "D:\<PATH>\BanhmiVim\banhmivim\banhmivim.ps1" @args
+}
+```
+
 ## UI
 
 ### Fonts

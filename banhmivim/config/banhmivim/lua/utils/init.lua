@@ -128,4 +128,8 @@ M.is_windows = function()
    return vim.loop.os_uname().sysname == "Windows"
 end
 
+M.get_config_or = function(config_name, default) 
+  return default
+end
+
 return M

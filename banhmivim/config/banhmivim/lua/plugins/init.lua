@@ -1,3 +1,6 @@
 require("plugins.filetree")
 require("plugins.filesearch")
 require("plugins.buffer_line")
+require("plugins.trouble_nvim")
+require("plugins.autocmp")
+require("plugins.mason_nvim")

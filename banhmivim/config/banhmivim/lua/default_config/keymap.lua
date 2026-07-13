@@ -230,7 +230,7 @@ return {
        {
           command = "OpenConfig",
           fn = function()
-             vim.cmd("edit " .. vim.fn.stdpath("config"))
+             vim.cmd("edit " .. vim.fn.stdpath("config") .. "/lua/config/banhmivim.lua")
           end,
           desc = "Open the config folder",
        },

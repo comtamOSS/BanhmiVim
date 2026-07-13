@@ -13,6 +13,8 @@ vim.opt.clipboard = "unnamedplus"
 vim.wo.signcolumn = "yes"
 vim.opt.winborder = "rounded"
 
+vim.o.autocomplete = false
+
 local sev = vim.diagnostic.severity
 
 vim.diagnostic.config({

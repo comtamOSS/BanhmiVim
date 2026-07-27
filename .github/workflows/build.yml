@@ -1,0 +1,79 @@
+name: Build and Package BanhmiVim
+
+on:
+  workflow_dispatch:
+
+env:
+  ZIG_VERSION: "0.16.0"
+  TS_CLI_VERSION: "0.26.11"
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Build Dependencies
+        uses: actions/cache@v4
+        with:
+          path: .bmcache
+          key: ${{ runner.os }}-bmcache-${{ hashFiles('build.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-bmcache-
+
+      - name: Install Neovim
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y neovim
+
+      - name: Run Build Script
+        run: |
+          chmod +x ./build.sh
+          ./build.sh
+
+      - name: Archive Bundle
+        run: |
+          mkdir -p release
+          tar -czf release/banhmivim-linux-x64.tar.gz -C dist banhmivim
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: banhmivim-linux-x64
+          path: release/banhmivim-linux-x64.tar.gz
+          retention-days: 7
+
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Build Dependencies
+        uses: actions/cache@v4
+        with:
+          path: .bmcache
+          key: ${{ runner.os }}-bmcache-${{ hashFiles('banhmivim/build.ps1') }}
+          restore-keys: |
+            ${{ runner.os }}-bmcache-
+
+      - name: Run Build Script
+        shell: pwsh
+        run: |
+          .\build.ps1
+
+      - name: Archive Bundle
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path release -Force
+          Compress-Archive -Path dist\banhmivim -DestinationPath release\banhmivim-windows-x64.zip
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: banhmivim-windows-x64
+          path: release/banhmivim-windows-x64.zip
+          retention-days: 7

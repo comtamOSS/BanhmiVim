@@ -8,4 +8,10 @@ vim.api.nvim_create_autocmd("BufEnter", {
    end,
 })
 
-require'nvim-treesitter'.setup ({})
+require('nvim-treesitter').install({
+  'rust', 'javascript', 'zig' 
+})
+
+-- require'nvim-treesitter'.setup ({})
+
+

@@ -7,13 +7,17 @@ vim.pack.add({
 })
 
 -- Lazy load on first insert mode entry (may not necessary)
-local group = vim.api.nvim_create_augroup("BlinkCmpLazyLoad", { clear = true })
-
-vim.api.nvim_create_autocmd("InsertEnter", {
-	pattern = "*",
-	group = group,
-	once = true,
-	callback = function()
+-- local group = vim.api.nvim_create_augroup("BlinkCmpLazyLoad", { clear = true })
+--
+-- vim.api.nvim_create_autocmd("InsertEnter", {
+-- 	pattern = "*",
+-- 	group = group,
+-- 	once = true,
+-- 	callback = function()
+-- 	end,
+-- })
+--
+--
 		require("blink.cmp").setup({
       cmdline = {
          keymap = {
@@ -109,7 +113,4 @@ vim.api.nvim_create_autocmd("InsertEnter", {
          }
       },
 		})
-	end,
-
-})
 

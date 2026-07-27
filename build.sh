@@ -11,10 +11,9 @@ ZIG_VERSION="0.16.0"
 ZIG_URL="https://ziglang.org/download/${ZIG_VERSION}/zig-x86_64-linux-${ZIG_VERSION}.tar.xz"
 ZIG_TAR_NAME="zig-linux-x86_64-${ZIG_VERSION}.tar.xz"
 
-LUA_LSP_VERSION="3.13.6"
-LUA_LSP_URL="https://github.com/LuaLS/lua-language-server/releases/download/${LUA_LSP_VERSION}/lua-language-server-${LUA_LSP_VERSION}-linux-x64.tar.gz"
-LUA_LSP_TAR_NAME="lua-language-server-${LUA_LSP_VERSION}-linux-x64.tar.gz"
-
+# LUA_LSP_VERSION="3.13.6"
+# LUA_LSP_URL="https://github.com/LuaLS/lua-language-server/releases/download/${LUA_LSP_VERSION}/lua-language-server-${LUA_LSP_VERSION}-linux-x64.tar.gz"
+# LUA_LSP_TAR_NAME="lua-language-server-${LUA_LSP_VERSION}-linux-x64.tar.gz"
 
 TS_CLI_VERSION="0.26.11"
 TS_CLI_URL="https://github.com/tree-sitter/tree-sitter/releases/download/v${TS_CLI_VERSION}/tree-sitter-linux-x64.gz"
@@ -38,18 +37,18 @@ fi
 echo "Extracting Zig to bundle..."
 tar -xJ --strip-components=1 -C "$BIN_DIR/zig" -f "$CACHE_DIR/$ZIG_TAR_NAME"
 
-echo "--- Processing Lua Language Server (v${LUA_LSP_VERSION}) ---"
-mkdir -p "$LSP_DIR/lua-language-server"
-
-if [ ! -f "$CACHE_DIR/$LUA_LSP_TAR_NAME" ]; then
-    echo "Cache miss: Downloading Lua LS..."
-    curl -L "$LUA_LSP_URL" -o "$CACHE_DIR/$LUA_LSP_TAR_NAME"
-else
-    echo "Cache hit: Using cached Lua LS archive."
-fi
-
-echo "Extracting Lua LS to bundle..."
-tar -xz -C "$LSP_DIR/lua-language-server" -f "$CACHE_DIR/$LUA_LSP_TAR_NAME"
+# echo "--- Processing Lua Language Server (v${LUA_LSP_VERSION}) ---"
+# mkdir -p "$LSP_DIR/lua-language-server"
+#
+# if [ ! -f "$CACHE_DIR/$LUA_LSP_TAR_NAME" ]; then
+#     echo "Cache miss: Downloading Lua LS..."
+#     curl -L "$LUA_LSP_URL" -o "$CACHE_DIR/$LUA_LSP_TAR_NAME"
+# else
+#     echo "Cache hit: Using cached Lua LS archive."
+# fi
+#
+# echo "Extracting Lua LS to bundle..."
+# tar -xz -C "$LSP_DIR/lua-language-server" -f "$CACHE_DIR/$LUA_LSP_TAR_NAME"
 
 
 echo "--- Processing Tree-sitter CLI (v${TS_CLI_VERSION}) ---"

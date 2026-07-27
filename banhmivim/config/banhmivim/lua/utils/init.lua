@@ -128,8 +128,52 @@ M.is_windows = function()
    return vim.loop.os_uname().sysname == "Windows"
 end
 
-M.get_config_or = function(config_name, default) 
-  return default
+M.get_config_or = function(config_name, default)
+    local current = require("config.banhmivim")
+
+    for key in config_name:gmatch("[^%.]+") do
+        if type(current) ~= "table" then
+            return default
+        end
+
+        key = tonumber(key) or key
+        current = current[key]
+
+        if current == nil then
+            return default
+        end
+    end
+
+  return current
+end
+
+
+M.is_config_equal = function(config_name, value)
+  local value_in_config = M.get_config_or(config_name, nil)
+  return value_in_config == value
+end
+
+M.if_true = function(path, callback)
+    local current = require("config.banhmivim")
+
+    for key in path:gmatch("[^%.]+") do
+        if type(current) ~= "table" then
+            return false
+        end
+
+        key = tonumber(key) or key
+        current = current[key]
+
+        if current == nil then
+            return false
+        end
+    end
+    if current then
+        callback(current)
+        return true
+    end
+
+    return false
 end
 
 return M

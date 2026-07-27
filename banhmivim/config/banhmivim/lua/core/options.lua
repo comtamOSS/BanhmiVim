@@ -1,6 +1,9 @@
+local is_config_equal = require("utils.init").is_config_equal
 
-vim.opt.number = true
-vim.opt.relativenumber = true
+
+vim.opt.number = is_config_equal("editor.number", "absolute")
+vim.opt.relativenumber = is_config_equal("editor.number", "relative")
+
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2

@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 return {
    opts = { noremap = true, silent = false },
    mapleader = " ",
@@ -68,9 +70,9 @@ return {
       { mode = "n", key = "mm", fn = "%", desc = "Go to matching bracket" },
       { mode = "n", key = "+", fn = "<C-a>", desc = "Increment" },
       { mode = "n", key = "-", fn = "<C-x>", desc = "Decrement" },
-      { mode = "n", key = "<leader>ub", fn = function() require("utils").toggle_checkbox() end, desc = "Toggle checkbox" },
+      { mode = "n", key = "<leader>ub", fn = function() utils.toggle_checkbox() end, desc = "Toggle checkbox" },
       { mode = "n", key = "<leader>ut", fn = "<cmd>Checkmate toggle<CR>", desc = "Toggle checkbox" },
-      { mode = "n", key = "<leader>uo", fn = function() require("utils").handleURL() end, desc = "Open URL" },
+      { mode = "n", key = "<leader>uo", fn = function() utils.handleURL() end, desc = "Open URL" },
       { mode = "n", key = "D", fn = '"_d', desc = "Delete not cut" },
       -- [[ -------------------------------------
       --             UTILS
@@ -198,10 +200,9 @@ return {
       {
          command = "Breakline",
          fn = function(opts)
-            local util = require("utils")
             local bufnr = vim.api.nvim_get_current_buf()
             local linenr = vim.api.nvim_win_get_cursor(0)[1] - 1   -- 0-based index
-            util.break_line_to_multiline(bufnr, linenr, tonumber(opts.args))
+            utils.break_line_to_multiline(bufnr, linenr, tonumber(opts.args))
          end,
          opts = {
             nargs = "?"
@@ -210,8 +211,7 @@ return {
       {
          command = "AdjustLine",
          fn = function(opts)
-            local util = require("utils")
-            util.reflow_selected_lines(tonumber(opts.args))
+            utils.reflow_selected_lines(tonumber(opts.args))
          end,
          opts = {
             range = true,

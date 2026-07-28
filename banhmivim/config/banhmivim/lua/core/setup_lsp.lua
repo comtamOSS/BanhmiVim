@@ -22,11 +22,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
--- local lsp_list = require("config.language_servers")
--- vim.lsp.enable(lsp_list)
-
-
-vim.lsp.enable("lua_ls")
+local lsp_list = require("config.banhmivim").language_server_enabled
+vim.lsp.enable(lsp_list)
 
 -- vim.lsp.completion.disable()
 

@@ -8,9 +8,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
    end,
 })
 
-require('nvim-treesitter').install({
-  'rust', 'javascript', 'zig' 
-})
+local lang_list = require("config.banhmivim").treesister
+require('nvim-treesitter').install(lang_list)
 
 -- require'nvim-treesitter'.setup ({})
 

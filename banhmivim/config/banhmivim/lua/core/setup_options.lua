@@ -1,5 +1,4 @@
-local is_config_equal = require("utils.init").is_config_equal
-
+local is_config_equal = require("utils").is_config_equal
 
 vim.opt.number = is_config_equal("editor.number", "absolute")
 vim.opt.relativenumber = is_config_equal("editor.number", "relative")

@@ -1,3 +1,5 @@
-require("core.options")
-require("core.lsp_config")
+require("core.setup_options")
+require("core.setup_autocmd")
+require("core.setup_ui")
 require("core.setup_keymap").init()
+require("core.setup_lsp")

@@ -77,11 +77,12 @@ function M.create_keymap_with_mode(args)
 end
 
 function M.init()
-   local keymaps = require("default_config.keymap").keymaps
-   local user_command = require("default_config.keymap").user_command
-   local opts = require("default_config.keymap").opts
-   local leader = require("default_config.keymap").mapleader
-   local localleader = require("default_config.keymap").maplocalleader
+   local keymap_default = require("core.keymap.default")
+   local keymaps = keymap_default.keymaps
+   local user_command = keymap_default.user_command
+   local opts = keymap_default.opts
+   local leader = keymap_default.mapleader
+   local localleader = keymap_default.maplocalleader
 
    vim.g.mapleader = leader
    vim.g.maplocalleader = localleader

@@ -5,13 +5,12 @@ return {
   -- ***********
   editor = {
 
-    -- 
+    --
     -- value: "absolute" | "relative" | "none"
     number = "relative",
 
 
   },
-
 
   -- ****************************
   -- *  LANGUAGE_SERVER_ENABLED *

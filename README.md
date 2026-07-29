@@ -14,16 +14,16 @@ How long you want to spend to setup your neovim in new computer, all day, or jus
 ## Setup alias
 
 ### Linux
-```zsh
-alias banhmivim="<PATH>/BanhmiVim/banhmivim/banhmivim"
-```
+<!-- ```zsh -->
+<!-- alias banhmivim="<PATH>/BanhmiVim/banhmivim/banhmivim" -->
+<!-- ``` -->
 
 ### Windows
-```ps1
-function banhmivim {
-    & "D:\<PATH>\BanhmiVim\banhmivim\banhmivim.ps1" @args
-}
-```
+<!-- ```ps1 -->
+<!-- function banhmivim { -->
+<!--     & "D:\<PATH>\BanhmiVim\banhmivim\banhmivim.ps1" @args -->
+<!-- } -->
+<!-- ``` -->
 
 ## UI
 

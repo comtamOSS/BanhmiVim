@@ -8,4 +8,3 @@ vim.opt_local.concealcursor=""
 -- vim.cmd[[set formatoptions+=a]]
 vim.cmd[[set breakindent]]
 
-

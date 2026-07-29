@@ -1,3 +1,3 @@
 require("core")
-require("plugins")
+require("utils").require_all("plugins")
 

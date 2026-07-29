@@ -176,4 +176,30 @@ M.if_true = function(path, callback)
     return false
 end
 
+M.require_all = function (folder)
+    local path = vim.fn.stdpath("config") .. "/lua/" .. folder:gsub("%.", "/")
+
+    local handle = vim.loop.fs_scandir(path)
+    if not handle then
+        vim.notify("require_all: could not open " .. path, vim.log.levels.WARN)
+        return
+    end
+
+    while true do
+        local name, ftype = vim.loop.fs_scandir_next(handle)
+        if not name then break end
+
+        if ftype == "file" and name:match("%.lua$") then
+            local modname = name:gsub("%.lua$", "")
+            local ok, err = pcall(require, folder .. "." .. modname)
+            if not ok then
+                vim.notify(
+                    "require_all: failed to load " .. folder .. "." .. modname .. "\n" .. err,
+                    vim.log.levels.ERROR
+                )
+            end
+        end
+    end
+end
+
 return M

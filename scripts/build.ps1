@@ -1,11 +1,14 @@
 #!/usr/bin/env pwsh
 $ErrorActionPreference = "Stop"
 
-$TargetDir = "$PWD\dist\banhmivim"
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ProjectRoot = Split-Path -Parent $ScriptDir
+
+$TargetDir = "$ProjectRoot\dist\banhmivim"
 $BundleConfig = "$TargetDir\config"
 $BinDir = "$TargetDir\bin"
 $LspDir = "$TargetDir\lsp"
-$CacheDir = "$PWD\.bmcache"
+$CacheDir = "$ProjectRoot\.bmcache"
 
 $ZigVersion = "0.16.0"
 $ZigUrl = "https://ziglang.org/download/${ZigVersion}/zig-x86_64-windows-${ZigVersion}.zip"
@@ -21,11 +24,15 @@ New-Item -ItemType Directory -Path $BinDir -Force | Out-Null
 New-Item -ItemType Directory -Path $CacheDir -Force | Out-Null
 
 # Copy config files (from banhmivim/config/ into dist/banhmivim/config/)
-Copy-Item -Path "$PWD\banhmivim\config\*" -Destination $BundleConfig -Recurse -Force
+Copy-Item -Path "$ProjectRoot\banhmivim\config\*" -Destination $BundleConfig -Recurse -Force
+
+Copy-Item -Path "$ProjectRoot\banhmivim\bin\banhmivim.ps1" -Destination $BinDir -Force
+
+Copy-Item -Path "$ProjectRoot\scripts\zig.bat" -Destination $BinDir -Force
 
 # ---- Zig Compiler ----
 Write-Host "--- Processing Zig Compiler (v${ZigVersion}) ---"
-New-Item -ItemType Directory -Path "$BinDir\zig" -Force | Out-Null
+New-Item -ItemType Directory -Path "$BinDir\zig-dist" -Force | Out-Null
 
 $ZigCachePath = "$CacheDir\$ZigZipName"
 if (-not (Test-Path $ZigCachePath)) {
@@ -44,7 +51,7 @@ try {
     Expand-Archive -Path $ZigCachePath -DestinationPath $TempZig -Force
     $ZigSubDir = Get-ChildItem -Path $TempZig -Directory | Select-Object -First 1
     if ($ZigSubDir) {
-        Get-ChildItem -Path $ZigSubDir.FullName | Copy-Item -Destination "$BinDir\zig" -Recurse -Force
+        Get-ChildItem -Path $ZigSubDir.FullName | Copy-Item -Destination "$BinDir\zig-dist" -Recurse -Force
     }
 } finally {
     Remove-Item -Path $TempZig -Recurse -Force -ErrorAction SilentlyContinue

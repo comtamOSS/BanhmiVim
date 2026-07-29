@@ -19,7 +19,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .bmcache
-          key: ${{ runner.os }}-bmcache-${{ hashFiles('build.sh') }}
+          key: ${{ runner.os }}-bmcache-${{ hashFiles('scripts/build.sh') }}
           restore-keys: |
             ${{ runner.os }}-bmcache-
 
@@ -30,8 +30,8 @@ jobs:
 
       - name: Run Build Script
         run: |
-          chmod +x ./build.sh
-          ./build.sh
+          chmod +x ./scripts/build.sh
+          ./scripts/build.sh
 
       - name: Archive Bundle
         run: |
@@ -56,14 +56,14 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .bmcache
-          key: ${{ runner.os }}-bmcache-${{ hashFiles('banhmivim/build.ps1') }}
+          key: ${{ runner.os }}-bmcache-${{ hashFiles('banhmivim/scripts/build.ps1') }}
           restore-keys: |
             ${{ runner.os }}-bmcache-
 
       - name: Run Build Script
         shell: pwsh
         run: |
-          .\build.ps1
+          .\scripts\build.ps1
 
       - name: Archive Bundle
         shell: pwsh

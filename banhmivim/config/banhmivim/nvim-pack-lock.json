@@ -31,6 +31,11 @@
       "src": "https://github.com/nvim-mini/mini.bufremove",
       "version": "'stable'"
     },
+    "mini.pairs": {
+      "rev": "4a014143fcb4e9df26198ccb3ecff3b9e77a048c",
+      "src": "https://github.com/echasnovski/mini.pairs",
+      "version": ">=0.0.0"
+    },
     "monoglow.nvim": {
       "rev": "a249b1f55bfe9171e2f8aff7acf140f78ca4b2bb",
       "src": "https://github.com/wnkz/monoglow.nvim"

@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TARGET_DIR="$(pwd)/dist/banhmivim"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+
+TARGET_DIR="$PROJECT_ROOT/dist/banhmivim"
 BUNDLE_CONFIG="$TARGET_DIR/config"
 BIN_DIR="$TARGET_DIR/bin"
 LSP_DIR="$TARGET_DIR/lsp"
-CACHE_DIR="$(pwd)/.bmcache"
+CACHE_DIR="$PROJECT_ROOT/.bmcache"
 
 ZIG_VERSION="0.16.0"
 ZIG_URL="https://ziglang.org/download/${ZIG_VERSION}/zig-x86_64-linux-${ZIG_VERSION}.tar.xz"
@@ -22,10 +25,13 @@ TS_CLI_GZ_NAME="tree-sitter-linux-x64-v${TS_CLI_VERSION}.gz"
 echo "Creating bundle structure at: $TARGET_DIR"
 mkdir -p "$BUNDLE_CONFIG" "$BIN_DIR" "$CACHE_DIR"
 
-cp -r ./banhmivim/config/* "$BUNDLE_CONFIG/"
+cp -r "$PROJECT_ROOT/banhmivim/config/"* "$BUNDLE_CONFIG/"
+
+cp "$PROJECT_ROOT/banhmivim/bin/banhmivim" "$BIN_DIR/"
+
 
 echo "--- Processing Zig Compiler (v${ZIG_VERSION}) ---"
-mkdir -p "$BIN_DIR/zig"
+mkdir -p "$BIN_DIR/zig-dist"
 
 if [ ! -f "$CACHE_DIR/$ZIG_TAR_NAME" ]; then
     echo "Cache miss: Downloading Zig..."
@@ -35,7 +41,9 @@ else
 fi
 
 echo "Extracting Zig to bundle..."
-tar -xJ --strip-components=1 -C "$BIN_DIR/zig" -f "$CACHE_DIR/$ZIG_TAR_NAME"
+tar -xJ --strip-components=1 -C "$BIN_DIR/zig-dist" -f "$CACHE_DIR/$ZIG_TAR_NAME"
+
+ln -s "$BIN_DIR/zig-dist/zig" "$BIN_DIR/zig" 2>/dev/null || true
 
 # echo "--- Processing Lua Language Server (v${LUA_LSP_VERSION}) ---"
 # mkdir -p "$LSP_DIR/lua-language-server"
@@ -49,6 +57,8 @@ tar -xJ --strip-components=1 -C "$BIN_DIR/zig" -f "$CACHE_DIR/$ZIG_TAR_NAME"
 #
 # echo "Extracting Lua LS to bundle..."
 # tar -xz -C "$LSP_DIR/lua-language-server" -f "$CACHE_DIR/$LUA_LSP_TAR_NAME"
+#
+#
 
 
 echo "--- Processing Tree-sitter CLI (v${TS_CLI_VERSION}) ---"

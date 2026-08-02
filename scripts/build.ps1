@@ -26,9 +26,10 @@ New-Item -ItemType Directory -Path $CacheDir -Force | Out-Null
 # Copy config files (from banhmivim/config/ into dist/banhmivim/config/)
 Copy-Item -Path "$ProjectRoot\banhmivim\config\*" -Destination $BundleConfig -Recurse -Force
 
-Copy-Item -Path "$ProjectRoot\banhmivim\bin\banhmivim.ps1" -Destination $BinDir -Force
+Copy-Item -Path "$ProjectRoot\banhmivim\bin\banhmivim.cmd" -Destination $BinDir -Force
 
 Copy-Item -Path "$ProjectRoot\scripts\zig.bat" -Destination $BinDir -Force
+Copy-Item -Path "$ProjectRoot\scripts\zigcc.bat" -Destination $BinDir -Force
 
 # ---- Zig Compiler ----
 Write-Host "--- Processing Zig Compiler (v${ZigVersion}) ---"

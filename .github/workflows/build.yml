@@ -1,7 +1,11 @@
 name: Build and Package BanhmiVim
-
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. v1.2.3)"
+        required: true
+        type: string
 
 env:
   ZIG_VERSION: "0.16.0"
@@ -10,11 +14,9 @@ env:
 jobs:
   build-linux:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Cache Build Dependencies
         uses: actions/cache@v4
         with:
@@ -22,22 +24,18 @@ jobs:
           key: ${{ runner.os }}-bmcache-${{ hashFiles('scripts/build.sh') }}
           restore-keys: |
             ${{ runner.os }}-bmcache-
-
       - name: Install Neovim
         run: |
           sudo apt-get update
           sudo apt-get install -y neovim
-
       - name: Run Build Script
         run: |
           chmod +x ./scripts/build.sh
           ./scripts/build.sh
-
       - name: Archive Bundle
         run: |
           mkdir -p release
           tar -czf release/banhmivim-linux-x64.tar.gz -C dist banhmivim
-
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -47,11 +45,9 @@ jobs:
 
   build-windows:
     runs-on: windows-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Cache Build Dependencies
         uses: actions/cache@v4
         with:
@@ -59,21 +55,44 @@ jobs:
           key: ${{ runner.os }}-bmcache-${{ hashFiles('banhmivim/scripts/build.ps1') }}
           restore-keys: |
             ${{ runner.os }}-bmcache-
-
       - name: Run Build Script
         shell: pwsh
         run: |
           .\scripts\build.ps1
-
       - name: Archive Bundle
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Path release -Force
           Compress-Archive -Path dist\banhmivim -DestinationPath release\banhmivim-windows-x64.zip
-
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: banhmivim-windows-x64
           path: release/banhmivim-windows-x64.zip
           retention-days: 7
+
+  release:
+    needs: [build-linux, build-windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R artifacts
+
+      - name: Create Release and Upload Assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ inputs.tag }}" \
+            artifacts/banhmivim-linux-x64/banhmivim-linux-x64.tar.gz \
+            artifacts/banhmivim-windows-x64/banhmivim-windows-x64.zip \
+            --title "${{ inputs.tag }}" \
